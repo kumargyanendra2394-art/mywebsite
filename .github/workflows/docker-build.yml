@@ -15,15 +15,5 @@ jobs:
       - name: Build Docker Image
         run: docker build -t mywebsite .
 
-      - name: Run container with ENV
-        run: |
-          docker run -d \
-            -e MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
-            -e MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }} \
-            -e MYSQL_USER=${{ secrets.MYSQL_USER }} \
-            -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-            mywebsite
-
-            - name: Debug ENV
-              run: env | grep MYSQL
+     
 
