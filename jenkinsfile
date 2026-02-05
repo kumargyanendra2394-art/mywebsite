@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                echo 'Pulling code from GitHub'
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image'
+                bat 'docker build -t mywebsite:latest .'
+            }
+        }
+
+        stage('Stop Old Container') {
+            steps {
+                echo 'Stopping old container if exists'
+                bat 'docker stop mywebsite-container || echo no container'
+                bat 'docker rm mywebsite-container || echo no container'
+            }
+        }
+
+        stage('Run New Container') {
+            steps {
+                echo 'Running new container'
+                bat 'docker run -d -p 8081:80 --name mywebsite-container mywebsite:latest'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful 🎉'
+        }
+        failure {
+            echo 'Deployment Failed ❌'
+        }
+    }
+}
