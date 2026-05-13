@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mywebsite-ingress
+spec:
+  rules:
+  - host: mywebsite.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: mywebsite-deploy
+            port:
+              number: 80
