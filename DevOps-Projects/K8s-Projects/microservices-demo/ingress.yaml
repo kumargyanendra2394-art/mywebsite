@@ -4,6 +4,9 @@ kind: Ingress
 metadata:
   name: micro-ingress
 
+annotations:
+  nginx.ingress.kubernetes.io/rewrite-target: /
+
 spec:
   ingressClassName: nginx
 
